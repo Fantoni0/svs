@@ -1,0 +1,53 @@
+{
+  "name": "solidity_voting",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx clean && NODE_ENV=mainnet npx hardhat test",
+    "deploy": "hardhat deploy",
+    "lint": "eslint --fix --ext .js,.jsx,.ts ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.3",
+    "@nomiclabs/hardhat-etherscan": "^2.1.8",
+    "@nomiclabs/hardhat-waffle": "^2.0.1",
+    "@typechain/ethers-v5": "^7.2.0",
+    "@typechain/hardhat": "^2.3.1",
+    "@types/chai": "^4.3.1",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^16.11.38",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
+    "@typescript-eslint/parser": "^4.33.0",
+    "chai": "^4.3.6",
+    "dotenv": "^10.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^3.4.1",
+    "eslint-plugin-promise": "^5.2.0",
+    "ethereum-waffle": "^3.4.0",
+    "ethers": "^5.5.2",
+    "hardhat": "^2.9.9",
+    "hardhat-deploy": "^0.11.12",
+    "hardhat-gas-reporter": "^1.0.6",
+    "prettier": "^2.5.1",
+    "prettier-plugin-solidity": "^1.0.0-beta.13",
+    "solhint": "^1.0.10",
+    "solidity-coverage": "^0.6.7",
+    "ts-node": "^10.8.0",
+    "typechain": "^5.2.0",
+    "typescript": "^4.7.4"
+  },
+  "dependencies": {
+    "@enumatech/secp256k1-js": "^1.0.0",
+    "@openzeppelin/contracts": "^4.4.1",
+    "big-integer": "^1.6.51",
+    "bn.js": "^5.2.1"
+  }
+}
