@@ -16,7 +16,7 @@ To properly cite the TAVS protocol, please use the following information:
 ```
 
 ## TAVS Summary
-A Two Autohirities electronic Voting Scheme (TAVS) is an e-voting protocol that achieves universal verifiability with a reduced time-complexity both for the elector and the system.
+A Two Authorities electronic Voting Scheme (TAVS) is an e-voting protocol that achieves universal verifiability with a reduced time-complexity both for the elector and the system.
 TAVS employs the homomorphic properties of [RSA](https://en.wikipedia.org/wiki/RSA_(cryptosystem)) cryptosystem to implement a [Blind Signature Scheme](http://blog.koehntopp.de/uploads/Chaum.BlindSigForPayment.1982.PDF) that allows for anonymous voting.
 The security of the scheme is derived from RSA itself and from the assumption that 2 unrelated entities exist.
 An Identification Authority (IA) that checks the membership of a potential elector in the census; and, a Remote Polling Station (RPS) where the electors cast their votes.
@@ -43,7 +43,7 @@ Roughly speaking, the code is organized as follows:
 - `conracts/` contains the smart contracts that implement SVS:
   -  `BigNumber.sol`: Ethereum has no default support for big numbers. Thanks to [firoorg](https://github.com/firoorg/solidity-BigNumber) for the BigNumber library.
   -  `EelctionFactory.sol`: Implements, and handles, the creation of Election instances.
-  -  `Election.sol`: Implements all the methods (vote, tally, verify) to carry out an Election in EVM netowrks.
+  -  `Election.sol`: Implements all the methods (vote, tally, verify) to carry out an Election in EVM networks.
 - `deploy/` contains the main scripts to deploy the contracts in Mumbai network.
 - `scripts/` contains a set of auxiliary functions both for implementing TAVS or for general smart contract development.
 - `test/` contains all the tests (in Typescript) for the smart contracts. 
