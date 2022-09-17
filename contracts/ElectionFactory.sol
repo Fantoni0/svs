@@ -7,7 +7,7 @@ import "./Election.sol";
 contract ElectionFactory {
 
     Election[] public elections;
-    mapping (uint256 => Election) public idToElection;l
+    mapping (uint256 => Election) public idToElection;
     event NewElection(address electionAddress, address indexed creator, uint256 indexed id, string indexed name); // Indexed allows to later filter results from events.
 
 

@@ -8,20 +8,7 @@ import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { generateRandomBallot, signBallot } from "../scripts/tavs";
 import { packAsNbytes } from "../scripts/utils";
-import { Contract, ContractReceipt } from "ethers";
-
-function parseEvent(
-  txReceipt: ContractReceipt,
-  contract: Contract,
-  eventName: any
-) {
-  const unparsedEv = txReceipt.logs.find(
-    // @ts-ignore
-    (evInfo) => evInfo.topics[0] === contract.filters[eventName]().topics[0]
-  );
-  // @ts-ignore
-  return contract.interface.parseLog(unparsedEv);
-}
+import { parseEvent } from "../scripts/utils";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const ElectionFactory = await ethers.getContractFactory("ElectionFactory");
@@ -60,7 +47,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   );
   console.log("Election contract deployed to: ", deployedAddressEV);
   // Simulate 10 votes
-  let votes: string[] = [];
+  const votes: string[] = [];
   let i: number;
   for (i = 0; i < 10; i++) {
     console.log("Sending vote number %d", i + 1);

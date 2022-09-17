@@ -68,7 +68,7 @@ npx hardhat test
 ### Deploy
 If you want to deploy the contracts in Mumbai Testnet, you need to configure the network in `hardhat.config.ts` and specify the private key in `env/.env`.
 ```
-npx hardhat run scripts/deploy.ts --network matic
+npx hardhat run deploy/deploy.ts --network matic
 ```
 
 ### Verify

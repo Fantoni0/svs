@@ -13,7 +13,7 @@ export function parseEvent(
   return contract.interface.parseLog(unparsedEv);
 }
 
-export function packAsNbytes(hexStr: string, n: number = 32) {
+export function packAsNbytes(hexStr: string, n = 32) {
   if (hexStr.substring(0, 2) === "0x") {
     hexStr = hexStr.substring(2);
   }
@@ -27,9 +27,9 @@ export function mostFrequent(a: string[]) {
   a.sort();
   let mostFrequent = a[0];
   let prevMostFrequent = a[0];
-  let maxCount: number = 1;
-  let prevMax: number = 0;
-  let currentCount: number = 1;
+  let maxCount = 1;
+  let prevMax = 0;
+  let currentCount = 1;
   let i: number;
   for (i = 1; i < a.length; i++) {
     if (a[i] === a[i - 1]) {

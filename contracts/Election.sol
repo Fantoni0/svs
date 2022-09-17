@@ -173,4 +173,3 @@ contract Election {
         return numberOfBytes;
     }
 }
-ss
