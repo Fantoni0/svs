@@ -8,7 +8,7 @@ contract Election {
 
     string name; // Short Name
     uint256 identifier;
-    bytes pubKey; // TODO: Decide how to store public_key
+    bytes pubKey;
     bytes modulo;
     uint256 startTime;
     uint256 completionTime;
@@ -17,7 +17,6 @@ contract Election {
 
     Candidate[] candidates;
     Candidate public winner;
-    // mapping (uint256 => Candidate) public candidates;
     mapping (address => Vote) public votes;
     event NewVote(address voter, bytes hash, string candidate);
 
@@ -174,3 +173,4 @@ contract Election {
         return numberOfBytes;
     }
 }
+ss

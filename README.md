@@ -1,5 +1,5 @@
-# SVS: Solidity Voting Scheme
-Solidity implementation of the **TAVS** electronic voting scheme.
+# Solidity Voting Scheme
+A solidity implementation of the **TAVS** electronic voting scheme.
 You can read the full paper [here](https://riunet.upv.es/bitstream/handle/10251/166370/Larrba-Flor?sequence=3).
 
 To properly cite the TAVS protocol, please use the following information: 
@@ -27,7 +27,7 @@ There are also many scenarios where finding two unrelated entities might be impo
 For this reason, we implement TAVS using Solidity, where the RPS is replaced by an immutable smart contract.
 Hence, solving the problem of finding two honest entities, since smart contracts are self-governed entities that only obey the source code. 
 Solidity Voting Scheme (SVS) is this implementation, and it has been made public for auditability and to contribute to the open source community.
-SVS is fully equivalent to TAVS except in the democracy property.
+SVS is fully equivalent to TAVS and maintains all the e-voting features presented in the original paper. 
 Since everything is public in blockchain, anyone can see the votes before the election ends.
 This can be solved by giving the IA an additional RSA key to allow users to encrypt votes. 
 The IA will free the private key after the election ends and the RPS will then compute the tally. 

@@ -2,13 +2,12 @@
 
 pragma solidity ^0.8.10;
 
-//import "./ownable.sol";
 import "./Election.sol";
 
 contract ElectionFactory {
 
     Election[] public elections;
-    mapping (uint256 => Election) public idToElection; // ¿Hace falta si ya existe un array?
+    mapping (uint256 => Election) public idToElection;l
     event NewElection(address electionAddress, address indexed creator, uint256 indexed id, string indexed name); // Indexed allows to later filter results from events.
 
 
