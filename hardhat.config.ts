@@ -10,7 +10,7 @@ import path from "path";
 dotenv.config({ path: path.join(__dirname, "/env/.env") });
 
 // Get variables from env files.
-const MUMBAI_PRIVATE_KEY = process.env.PRIVATE_API_KEY_MUMBAI || "";
+const MUMBAI_PRIVATE_KEY = process.env.MUMBAI_PRIVATE_KEY || "";
 const ETHERSCAN_API_KEY = process.env.ETHERSCAN_API_KEY || "";
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
