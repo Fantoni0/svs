@@ -7,8 +7,7 @@ import { ethers } from "hardhat";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
 import { generateRandomBallot, signBallot } from "../scripts/tavs";
-import { packAsNbytes } from "../scripts/utils";
-import { parseEvent } from "../scripts/utils";
+import { packAsNbytes, parseEvent } from "../scripts/utils";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   const ElectionFactory = await ethers.getContractFactory("ElectionFactory");
@@ -73,3 +72,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
   console.log("Deployment Finished");
 };
 export default func;
+func.tags = ["Main"];

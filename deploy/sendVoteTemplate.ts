@@ -6,9 +6,8 @@
 import { ethers } from "hardhat";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import {generateBallot, generateRandomBallot, signBallot} from "../scripts/tavs";
+import {generateBallot, signBallot} from "../scripts/tavs";
 import { packAsNbytes } from "../scripts/utils";
-import { parseEvent } from "../scripts/utils";
 
 const electionAddress = "YOUR DEPLOYED ELECTION ADDRESS GOES HERE";
 
@@ -38,3 +37,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
 }
 
 export default func;
+func.tags = ["Vote"]

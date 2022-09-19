@@ -68,7 +68,7 @@ npx hardhat test
 ### Deploy
 If you want to deploy the contracts in Mumbai Testnet, you need to configure the network in `hardhat.config.ts` and specify the private key in `env/.env`.
 ```
-npx hardhat run deploy/deploy.ts --network matic
+npx hardhat deploy --tags Main --network matic
 ```
 
 ### Verify
@@ -79,7 +79,7 @@ npx hardhat verify 0xEBa9F87654171f88004f519CC18EfBD8A02e9421 --network mumbai
 ```
 To verify the `Election` contract, since it was called with arguments, you need to provide the exact same arguments in the `deploy/arguments.js`, otherwise the verification will fail. 
 ```
-npx hardhat verify --constructor-args deploy/arguments.js --network mumbai  0x9E459651D2A14B100a310FDd542954bd9565dFC0
+npx hardhat verify --constructor-args verify/arguments.js --network mumbai  0x9E459651D2A14B100a310FDd542954bd9565dFC0
 ```
 
 ### Lint Code

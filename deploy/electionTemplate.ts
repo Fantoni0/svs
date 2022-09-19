@@ -6,11 +6,9 @@
 import { ethers } from "hardhat";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { generateRandomBallot, signBallot } from "../scripts/tavs";
-import { packAsNbytes } from "../scripts/utils";
-import { parseEvent } from "../scripts/utils";
+import { packAsNbytes , parseEvent} from "../scripts/utils";
 
-const electionFactoryAddress = "YOUR DEPLOYED ELECTION FACTORY GOES HERE";
+const electionFactoryAddress = "YOUR ELECTION FACTORY ADDRESS GOES HERE";
 
 const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const eFactoryInstance = await ethers.getContractAt(
@@ -40,6 +38,7 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         eFactoryInstance,
         "NewElection"
     );
+    console.log("NEW= ", newElectionEvent);
     const deployedAddressEV = newElectionEvent.args[0];
 
     // @ts-ignore
@@ -50,3 +49,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     console.log("Election contract deployed to: ", deployedAddressEV);
 };
 export default func;
+func.tags = ["Election"]

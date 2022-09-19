@@ -14,3 +14,4 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     console.log("Election Factory deployed to:", eFactoryInstance.address);
 };
 export default func;
+func.tags = ["ElectionFactory"]
