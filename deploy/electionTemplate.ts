@@ -38,10 +38,8 @@ const func: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
         eFactoryInstance,
         "NewElection"
     );
-    console.log("NEW= ", newElectionEvent);
     const deployedAddressEV = newElectionEvent.args[0];
 
-    // @ts-ignore
     const electionContract = await ethers.getContractAt(
         "Election",
         deployedAddressEV
