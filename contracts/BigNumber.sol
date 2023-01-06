@@ -19,10 +19,10 @@ library BigNumber {
       *            overloading allows caller to obtionally pass bitlen where it is known - as it is cheaper to do off-chain and verify on-chain.
       *            we assert input is in data structure as defined above, and that bitlen, if passed, is correct.
       *            'copy' parameter indicates whether or not to copy the contents of val to a new location in memory (for example where you pass the contents of another variable's value in)
-      * parameter: bytes val - bignum value.
-      * parameter: bool  neg - sign of value
-      * parameter: uint bitlen - bit length of value
-      * returns: instance r.
+      * @param bytes val - bignum value.
+      * @param bool  neg - sign of value
+      * @param uint bitlen - bit length of value
+      * @return instance r.
       */
     function _new(bytes memory val, bool neg, bool copy) internal view returns(instance memory r){
         require(val.length % 32 == 0);
@@ -48,10 +48,10 @@ library BigNumber {
 
     /** @dev Create a new Bignumber instance.
       *
-      * parameter: bytes val - bignum value
-      * parameter: bool  neg - sign of value
-      * parameter: uint bitlen - bit length of value
-      * returns: instance r.
+      * @param bytes val - bignum value
+      * @param bool  neg - sign of value
+      * @param uint bitlen - bit length of value
+      * @return instance r.
       */
     function _new(bytes memory val, bool neg, uint bitlen) internal pure returns(instance memory r){
         uint val_msword;
@@ -66,9 +66,9 @@ library BigNumber {
       *                   In order to do correct addition or subtraction we have to handle the sign.
       *                   This function discovers the sign of the result based on the inputs, and calls the correct operation.
       *
-      * parameter: instance a - first instance
-      * parameter: instance b - second instance
-      * returns: instance r - addition of a & b.
+      * @param instance a - first instance
+      * @param instance b - second instance
+      * @return instance r - addition of a & b.
       */
     function prepare_add(instance memory a, instance memory b) internal pure returns(instance memory r) {
         instance memory zero = instance(hex"0000000000000000000000000000000000000000000000000000000000000000",false,0);
@@ -117,11 +117,11 @@ library BigNumber {
       *              As values may be of different sizes, inputs are considered starting from the least significant words, working back.
       *              The function calculates the new bitlen (basically if bitlens are the same for max and min, max_bitlen++) and returns a new instance value.
       *
-      * parameter: bytes max -  biggest value  (determined from prepare_add)
-      * parameter: bytes min -  smallest value (determined from prepare_add)
-      * parameter: uint max_bitlen -  bit length of max value.
-      * returns: bytes result - max + min.
-      * returns: uint - bit length of result.
+      * @param bytes max -  biggest value  (determined from prepare_add)
+      * @param bytes min -  smallest value (determined from prepare_add)
+      * @param uint max_bitlen -  bit length of max value.
+      * @return bytes result - max + min.
+      * @return uint - bit length of result.
       */
     function bn_add(bytes memory max, bytes memory min, uint max_bitlen) private pure returns (bytes memory, uint) {
         bytes memory result;
@@ -193,11 +193,10 @@ library BigNumber {
       *                   In order to do correct addition or subtraction we have to handle the sign.
       *                   This function discovers the sign of the result based on the inputs, and calls the correct operation.
       *
-      * parameter: instance a - first instance
-      * parameter: instance b - second instance
-      * returns: instance r - a-b.
+      * @param instance a - first instance
+      * @param instance b - second instance
+      * @return instance r - a-b.
       */
-
     function prepare_sub(instance memory a, instance memory b) internal pure returns(instance memory r) {
         instance memory zero = instance(hex"0000000000000000000000000000000000000000000000000000000000000000",false,0);
         bytes memory val;
@@ -247,11 +246,11 @@ library BigNumber {
       *              As values may be of different sizes, inputs are considered starting from the least significant words, working back.
       *              The function calculates the new bitlen (basically if bitlens are the same for max and min, max_bitlen++) and returns a new instance value.
       *
-      * parameter: bytes max -  biggest value  (determined from prepare_add)
-      * parameter: bytes min -  smallest value (determined from prepare_add)
-      * parameter: uint max_bitlen -  bit length of max value.
-      * returns: bytes result - max + min.
-      * returns: uint - bit length of result.
+      * @param bytes max -  biggest value  (determined from prepare_add)
+      * @param bytes min -  smallest value (determined from prepare_add)
+      * @param uint max_bitlen -  bit length of max value.
+      * @return bytes result - max + min.
+      * @return uint - bit length of result.
       */
     function bn_sub(bytes memory max, bytes memory min) private pure returns (bytes memory, uint) {
         bytes memory result;
@@ -325,9 +324,9 @@ library BigNumber {
       *                 (a * b) = (((a + b)**2 - (a - b)**2) / 4
       *              squaring is done in op_and_square function.
       *
-      * parameter: instance a
-      * parameter: instance b
-      * returns: bytes res - a*b.
+      * @param instance a
+      * @param instance b
+      * @return bytes res - a*b.
       */
     function bn_mul(instance memory a, instance memory b) internal view returns(instance memory res){
 
@@ -351,10 +350,10 @@ library BigNumber {
       *                     using modular exponentation precompile for squaring. this requires taking a special modulus value of the form:
       *                     modulus == '1|(0*n)', where n = 2 * bit length of (a 'op' b).
       *
-      * parameter: instance a
-      * parameter: instance b
-      * parameter: int op
-      * returns: bytes res - (a'op'b) ^ 2.
+      * @param instance a
+      * @param instance b
+      * @param int op
+      * @return bytes res - (a'op'b) ^ 2.
       */
     function op_and_square(instance memory a, instance memory b, int op) private view returns(instance memory res){
         instance memory two = instance(hex"0000000000000000000000000000000000000000000000000000000000000002",false,2);
@@ -401,10 +400,10 @@ library BigNumber {
       *              the function returns the 'result' param passed on successful validation. returning a bool on successful validation is an option,
       *              however it makes more sense in the context of the calling contract that it should return the result.
       *
-      * parameter: instance a
-      * parameter: instance b
-      * parameter: instance result
-      * returns: 'result' param.
+      * @param instance a
+      * @param instance b
+      * @param instance result
+      * @return 'result' param.
       */
     function bn_div(instance memory a, instance memory b, instance memory result) internal view returns(instance memory){
 
@@ -444,10 +443,10 @@ library BigNumber {
     /** @dev prepare_modexp: takes base, exponent, and modulus, internally computes base^exponent % modulus, and creates new instance.
       *                      this function is overloaded: it assumes the exponent is positive. if not, the other method is used, whereby the inverse of the base is also passed.
       *
-      * parameter: instance base
-      * parameter: instance exponent
-      * parameter: instance modulus
-      * returns: instance result.
+      * @param instance base
+      * @param instance exponent
+      * @param instance modulus
+      * @return instance result.
       */
     function prepare_modexp(instance memory base, instance memory exponent, instance memory modulus) internal view returns(instance memory result) {
         require(exponent.neg==false); //if exponent is negative, other method with this same name should be used.
@@ -469,11 +468,11 @@ library BigNumber {
       *                      this function is overloaded: it assumes the exponent is negative.
       *                      if not, the other method is used, where the inverse of the base is not passed.
       *
-      * parameter: instance base
-      * parameter: instance base_inverse
-      * parameter: instance exponent
-      * parameter: instance modulus
-      * returns: instance result.
+      * @param instance base
+      * @param instance base_inverse
+      * @param instance exponent
+      * @param instance modulus
+      * @return instance result.
       */
     function prepare_modexp(instance memory base, instance memory base_inverse, instance memory exponent, instance memory modulus) internal view returns(instance memory result) {
         // base^-exp = (base^-1)^exp
@@ -498,10 +497,10 @@ library BigNumber {
     /** @dev modexp: Takes instance values for base, exp, mod and calls precompile for (_base^_exp)%^mod
       *              Wrapper for built-in modexp (contract 0x5) as described here - https://github.com/ethereum/EIPs/pull/198
       *
-      * parameter: bytes base
-      * parameter: bytes base_inverse
-      * parameter: bytes exponent
-      * returns: bytes ret.
+      * @param bytes base
+      * @param bytes base_inverse
+      * @param bytes exponent
+      * @return bytes ret.
       */
     function modexp(bytes memory _base, bytes memory _exp, bytes memory _mod) private view returns(bytes memory ret) {
         assembly {
@@ -568,10 +567,10 @@ library BigNumber {
       *              We call bn_mul for the two input values, before calling modexp, passing exponent as 1.
       *              Sign is taken care of in sub-functions.
       *
-      * parameter: instance a
-      * parameter: instance b
-      * parameter: instance modulus
-      * returns: instance res.
+      * @param instance a
+      * @param instance b
+      * @param instance modulus
+      * @return instance res.
       */
     function modmul(instance memory a, instance memory b, instance memory modulus) internal view returns(instance memory res){
         res = bn_mod(bn_mul(a,b),modulus);
@@ -581,10 +580,10 @@ library BigNumber {
     /** @dev mod_inverse: Takes instances for base, modulus, and result, verifies (base*result)%modulus==1, and returns result.
       *                   Similar to bn_div, it's far cheaper to verify an inverse operation on-chain than it is to calculate it, so we allow the user to pass their own result.
       *
-      * parameter: instance base
-      * parameter: instance modulus
-      * parameter: instance user_result
-      * returns: instance user_result.
+      * @param instance base
+      * @param instance modulus
+      * @param instance user_result
+      * @return instance user_result.
       */
     function mod_inverse(instance memory base, instance memory modulus, instance memory user_result) internal view returns(instance memory){
         require(base.neg==false && modulus.neg==false); //assert positivity of inputs.
@@ -604,8 +603,8 @@ library BigNumber {
 
     /** @dev is_odd: returns 1 if instance value is an odd number and 0 otherwise.
       *
-      * parameter: instance _in
-      * returns: uint ret.
+      * @param instance _in
+      * @return uint ret.
       */
     function is_odd(instance memory _in) internal pure returns(uint ret){
         assembly{
@@ -622,10 +621,10 @@ library BigNumber {
       *              if differing signs, we return immediately based on input.
       *           returns -1 on a<b, 0 on a==b, 1 on a>b.
       *
-      * parameter: instance a
-      * parameter: instance b
-      * parameter: bool signed
-      * returns: int.
+      * @param instance a
+      * @param instance b
+      * @param bool signed
+      * @return int.
       */
     function cmp(instance memory a, instance memory b, bool signed) internal pure returns(int){
         int trigger = 1;
@@ -675,9 +674,9 @@ library BigNumber {
       *                TODO: 1. add Oraclize randomness generation code template to be added to calling contract.
       *                      2. generalize for any size input (ie. make constant size randomness array dynamic in some way).
       *
-      * parameter: instance a
-      * parameter: instance[] randomness
-      * returns: bool indicating primality.
+      * @param instance a
+      * @param instance[] randomness
+      * @return bool indicating primality.
       */
     function is_prime(instance memory a, instance[3] memory randomness) internal view returns (bool){
         instance memory  zero = instance(hex"0000000000000000000000000000000000000000000000000000000000000000",false,0);
@@ -790,10 +789,10 @@ library BigNumber {
 
     /** @dev right_shift: right shift instance 'dividend' by 'value' bits.
       *
-      * parameter: instance a
-      * parameter: instance b
-      * parameter: bool signed
-      * returns: int.
+      * @param instance a
+      * @param instance b
+      * @param bool signed
+      * @return int.
       */
     function right_shift(instance memory dividend, uint value) internal pure returns(instance memory){
         //TODO use memcpy for cheap rightshift where input is multiple of 8 (byte size)
@@ -851,8 +850,8 @@ library BigNumber {
       *            we hash each instance WITHOUT it's first word - first word is a pointer to the start of the bytes value,
       *            and so is different for each struct.
       *
-      * parameter: instance a
-      * returns: bytes32 hash.
+      * @param instance a
+      * @return bytes32 hash.
       */
     function hash(instance memory a) internal pure returns(bytes32 _hash) {
         //amount of words to hash = all words of the value and three extra words: neg, bitlen & value length.
@@ -863,8 +862,8 @@ library BigNumber {
 
     /** @dev get_bit_length: get the bit length of an instance value input.
       *
-      * parameter: bytes a
-      * returns: uint res.
+      * @param bytes a
+      * @return uint res.
       */
     function get_bit_length(bytes memory val) internal pure returns(uint res){
         uint msword;
@@ -875,8 +874,8 @@ library BigNumber {
     /** @dev get_word_length: get the word length of a uint input - ie. log2_256 (most significant bit of 256 bit value (one EVM word))
       *                       credit: Tjaden Hess @ ethereum.stackexchange
       *
-      * parameter: uint x
-      * returns: uint y.
+      * @param uint x
+      * @return uint y.
       */
     function get_word_length(uint x) internal pure returns (uint y){
         uint arg = x;

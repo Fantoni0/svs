@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx clean && NODE_ENV=mainnet npx hardhat test",
+    "test": "npx clean && NODE_ENV=mainnet npx t test",
     "deploy": "hardhat deploy",
     "lint": "eslint --fix --ext .js,.jsx,.ts ."
   },
@@ -33,7 +33,7 @@
     "eslint-plugin-promise": "^5.2.0",
     "ethereum-waffle": "^3.4.0",
     "ethers": "^5.5.2",
-    "hardhat": "^2.9.9",
+    "hardhat": "^2.11.2",
     "hardhat-deploy": "^0.11.12",
     "hardhat-gas-reporter": "^1.0.6",
     "prettier": "^2.5.1",

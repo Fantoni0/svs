@@ -4,9 +4,14 @@ pragma solidity ^0.8.10;
 
 import "./BigNumber.sol";
 
+/**
+    @title A contract that implements an Election process.
+    @author Fantoni0
+    @notice You can use this contract to create and abstract the details of a democratic election according to the TAVS voting scheme. https://www.sciencedirect.com/science/article/pii/S0167404820302169
+    @custom:nonaudited This is an experimental contract that has NOT been audited.
+*/
 contract Election {
-
-    string name; // Short Name
+    string name;
     uint256 identifier;
     bytes pubKey;
     bytes modulo;
@@ -15,28 +20,42 @@ contract Election {
     uint256 byteSizeVoteEncoding;
     uint256 byteSizeHashEncoding;
 
-    Candidate[] candidates;
-    Candidate public winner;
-    mapping (address => Vote) public votes;
-    event NewVote(address voter, bytes hash, string candidate);
+    Candidate[] candidates;                                         // List of Candidates participating in the election.
+    Candidate public winner;                                        // Variable to store future election winner.
+    mapping (address => Vote) public votes;                         // Mapping addresses to received votes.
+    event NewVote(address voter, bytes hash, string candidate);     // Event to signal a new vote, for a specific candidate has been processed from an incoming address.
 
+    /// Represents a ballot containing a signed and masked vote, and the inverse required to remove the masking.
     struct Ballot {
         bytes signedMaskedBallot;
         bytes inverseMask;
     }
 
+    /// Represents an election Candidate.
     struct Candidate {
         string name;
         uint256 numVotes;
         uint256 id;
     }
 
+    /// Represents a vote for a Candidate.
     struct Vote {
         address voter;
         Ballot ballot;
         Candidate candidate;
     }
 
+    /**
+        @notice Creates an instance of the Election contract.
+        @param name String identifier of the election.
+        @param identifier Numeric unique identifier of the election.
+        @param pubKey Public key used to verify the votes.
+        @param modulo RSA modulus used with the pubKey.
+        @param startTime Time when the election starts.
+        @param completionTime Time when the election ends and no more votes will be processed.
+        @param byteSizeVoteEncoding Number of bytes encoding the vote.
+        @param byteSizeHashEncoding Number of bytes encoding the hash of the vote.
+    */
     constructor (string memory _name,
                  uint256 _identifier,
                  bytes memory _pubKey,
@@ -63,6 +82,13 @@ contract Election {
         }
     }
 
+    /**
+        @notice Sends a vote to the Election contract.
+        @dev Emits an event with the registered vote to later be indexed.
+        @param signedMaskedBallot Bytes containing the signed and masked ballot.
+        @param mask Bytes used to mask the signed ballot.
+        @param inverseMask Inverse to the mask in modulo RSA used to remove the masking.
+    */
     function sendVote (bytes memory signedMaskedBallot, bytes memory mask, bytes memory inverseMask) external {
         // Check timestamp before accepting the votes.votes
         require(block.timestamp < completionTime, "Election has already finished. No more votes accepted.");
@@ -107,6 +133,12 @@ contract Election {
         emit NewVote(msg.sender, voteHash, candidates[idCandidate].name);
     }
 
+    /**
+        @notice Given a stream of bytes, separates the vote and the hash that identifies it.
+        @dev Vote and hash sizes are flexible and can be tuned for different vote codifications and hash functions.
+        @param data Bytestream containing the concatenated vote and hash.
+        @return (vote, hash) Bytes containing respectively the vote and the hash already separated.
+    */
     function separateVoteAndHash (bytes memory data) internal view returns (bytes memory, bytes memory) {
         bytes memory _voteChoice = new bytes(byteSizeVoteEncoding);
         bytes memory _voteHash = new bytes(byteSizeHashEncoding);
@@ -119,6 +151,12 @@ contract Election {
         return (_voteChoice, _voteHash);
     }
 
+    /**
+        @notice Removes leading zeros from a bytestream.
+        @dev When dealing with big numbers, we make use of a library that does not work well with leading zeroes.
+        @param data Bytestream of data to remove leading zeroes from.
+        @return Bytestream without leading zeroes.
+    */
     function removeLeadingZeros(bytes memory data) internal pure returns (bytes memory) {
         uint zbytes = 0;
         bool leadingZeros = true;
@@ -144,6 +182,11 @@ contract Election {
         return result;
     }
 
+    /**
+        @notice Computes the winner of the election.
+        @dev The method should not be called until Election ends. In case of draw a phony Candidate with name Draw is returned.
+        @return Candidate The candidate with most votes.
+    */
     function computeWinner () public returns (Candidate memory) {
         require(block.timestamp > completionTime,
             "Election must be finished to compute tally.");
@@ -164,6 +207,11 @@ contract Election {
         }
     }
 
+    /**
+        @notice Compute number of bytes required to represent a given uint256.
+        @param x Number to be represented.
+        @return Number of bytes required to represent x.
+    */
     function computeNumberBytes (uint256 x) internal pure returns (uint256) {
         uint256 numberOfBytes = 0;
         while (x != 0) {
