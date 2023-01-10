@@ -50,6 +50,10 @@ Roughly speaking, the code is organized as follows:
 ## Usage
 
 ### Installation
+The installation has been tested out in the latest node LTS version (18.13.0).
+The version included in the official repositories of some linux distros may be outdated. 
+Make sure to update the [node](https://nodejs.org/en/) installation first.
+
 Assuming you have `node` and `npm` installed, you simply have to run:
 ```
 npm install
