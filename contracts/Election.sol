@@ -47,14 +47,13 @@ contract Election {
 
     /**
         @notice Creates an instance of the Election contract.
-        @param name String identifier of the election.
-        @param identifier Numeric unique identifier of the election.
-        @param pubKey Public key used to verify the votes.
-        @param modulo RSA modulus used with the pubKey.
-        @param startTime Time when the election starts.
-        @param completionTime Time when the election ends and no more votes will be processed.
-        @param byteSizeVoteEncoding Number of bytes encoding the vote.
-        @param byteSizeHashEncoding Number of bytes encoding the hash of the vote.
+        @param _name String identifier of the election.
+        @param _identifier Numeric unique identifier of the election.
+        @param _pubKey Public key used to verify the votes.
+        @param _modulo RSA modulus used with the pubKey.
+        @param _startTime Time when the election starts.
+        @param _duration Duration of the election.
+        @param _candidates Array of candidates presented to the election.
     */
     constructor (string memory _name,
                  uint256 _identifier,
@@ -63,8 +62,8 @@ contract Election {
                  uint256 _startTime,
                  uint256 _duration,
                  string[] memory _candidates) {
-        byteSizeVoteEncoding = 32;
-        byteSizeHashEncoding = 32;
+        byteSizeVoteEncoding = 32; // Number of bytes encoding the vote.
+        byteSizeHashEncoding = 32; // Number of bytes encoding the hash of the vote.
         name = _name;
         identifier = _identifier;
         pubKey = _pubKey;
@@ -74,7 +73,7 @@ contract Election {
         } else {
             startTime = block.timestamp;
         }
-        completionTime =  startTime + _duration;
+        completionTime =  startTime + _duration; // Time when the election ends and no more votes will be processed.
         // Add candidate for null/void votes.
         candidates.push(Candidate("Null Vote", 0, 0));
         for (uint256 i = 0; i < _candidates.length; i++) {

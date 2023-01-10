@@ -28,7 +28,7 @@ contract ElectionFactory {
     /**
         @notice Returns an specific election indexed by id.
         @dev The id is actually the position in the array for indexing efficiency.
-        @param id Id of the election.
+        @param _id Id of the election.
         @return Election.
     */
     function getElection (uint256 _id) external view returns (Election) {
@@ -37,12 +37,12 @@ contract ElectionFactory {
 
     /**
         @notice Creates an instance of the class Election.
-        @param name String identifier of the election.
-        @param pubKey Public key used to verify the votes.
-        @param modulo RSA modulus used with the pubKey.
-        @param startTime Time when the election starts.
-        @param duration Duration of the election.
-        @param candidates List of presented candidates in the election.
+        @param _name String identifier of the election.
+        @param _pubKey Public key used to verify the votes.
+        @param _modulo RSA modulus used with the pubKey.
+        @param _startTime Time when the election starts.
+        @param _duration Duration of the election.
+        @param _candidates List of presented candidates in the election.
         @return Election id.
     */
     function createElection(string memory _name,
